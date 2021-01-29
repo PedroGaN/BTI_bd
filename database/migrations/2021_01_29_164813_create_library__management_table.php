@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSearchesTable extends Migration
+class CreateLibraryManagementTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,21 @@ class CreateSearchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('searches', function (Blueprint $table) {
-            $table->id();
+        Schema::create('library_management', function (Blueprint $table) {
 
-            $table->string('data', 100);
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('library_id')->unsigned();
 
             $table->timestamps();
         });
 
-        Schema::table('searches', function(Blueprint $table){   
-            
+        Schema::table('library_management', function(Blueprint $table){   
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->foreign('library_id')->references('id')->on('libraries')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -35,6 +37,6 @@ class CreateSearchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('searches');
+        Schema::dropIfExists('library_management');
     }
 }

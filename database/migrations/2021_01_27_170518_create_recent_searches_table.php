@@ -20,7 +20,7 @@ class CreateRecentSearchesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('favourite_food', function(Blueprint $table){   
+        Schema::table('recent_searches', function(Blueprint $table){   
 
             $table->foreign('search_id')->references('id')->on('searches')->onDelete('cascade');
         

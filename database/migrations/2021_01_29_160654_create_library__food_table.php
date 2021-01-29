@@ -21,7 +21,7 @@ class CreateLibraryFoodTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('favourite_food', function(Blueprint $table){   
+        Schema::table('library_food', function(Blueprint $table){   
 
             $table->foreign('library_id')->references('id')->on('libraries')->onDelete('cascade');
 

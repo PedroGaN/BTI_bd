@@ -13,7 +13,7 @@ class CreateFavouriteFoodTable extends Migration
      */
     public function up()
     {
-        Schema::create('favourite_food', function (Blueprint $table) {
+        Schema::create('favourite_foods', function (Blueprint $table) {
             
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('food_id')->unsigned();
@@ -21,9 +21,9 @@ class CreateFavouriteFoodTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('favourite_food', function(Blueprint $table){   
+        Schema::table('favourite_foods', function(Blueprint $table){   
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+
             $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
         });
 

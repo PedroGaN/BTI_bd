@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUser()
+    public function createUser(Request $request)
     {
         $response = "";
 
@@ -37,7 +38,6 @@ class UserController extends Controller
             $user->name = $data->name;
             $user->email = $data->email;
             $user->password = Hash::make($data->password);
-            $checkStatus = $data->status;
 
             try{
 

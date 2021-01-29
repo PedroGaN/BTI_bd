@@ -15,7 +15,15 @@ class CreateSearchesTable extends Migration
     {
         Schema::create('searches', function (Blueprint $table) {
             $table->id();
+
+            $table->string('data', 100);
+            $table->bigInteger('user_id')->unsigned();
+
             $table->timestamps();
+        });
+
+        Schema::table('searches', function(Blueprint $table){   
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

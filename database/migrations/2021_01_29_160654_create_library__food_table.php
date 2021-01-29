@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecentSearchesTable extends Migration
+class CreateLibraryFoodTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreateRecentSearchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('recent_searches', function (Blueprint $table) {
+        Schema::create('library_food', function (Blueprint $table) {
             
-            $table->bigInteger('search_id')->unsigned();            
+            $table->bigInteger('library_id')->unsigned();            
+            $table->bigInteger('food_id')->unsigned();            
 
             $table->timestamps();
         });
 
         Schema::table('favourite_food', function(Blueprint $table){   
 
-            $table->foreign('search_id')->references('id')->on('searches')->onDelete('cascade');
+            $table->foreign('library_id')->references('id')->on('libraries')->onDelete('cascade');
+
+            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
         
         });
 
@@ -35,6 +38,6 @@ class CreateRecentSearchesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recent_searches');
+        Schema::dropIfExists('library_food');
     }
 }

@@ -18,6 +18,8 @@ class CreateLibraryManagementTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('library_id')->unsigned();
 
+            $table->boolean('on_use')->default(false);
+
             $table->timestamps();
         });
 

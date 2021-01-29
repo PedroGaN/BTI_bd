@@ -18,7 +18,6 @@ class CreateLibrariesTable extends Migration
 
             $table->string('name', 100);
             $table->string('region', 100);
-            $table->boolean('on_use')->default(false);
 
             $table->timestamps();
         });

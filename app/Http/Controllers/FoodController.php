@@ -22,9 +22,36 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createFood(Request $request)
     {
-        //
+        $response = "";
+
+        $data = $request->getContent();
+
+        $data = json_decode($data);
+
+        if($data){
+
+            $food = new Food();
+
+            $food->name = $data->name;
+            $food->nutritional_values = $data->nutritional_values;
+
+            try{
+
+                $food->save();
+
+                $response = "New Food: ".$food->name." saved succesfully";
+
+            }catch(\Exception $e){
+                $response = $e->getMessage();
+            }
+            
+        }else{
+            $response = "Incorrect Data";
+        }
+
+        return response($response);
     }
 
     /**
@@ -67,9 +94,41 @@ class FoodController extends Controller
      * @param  \App\Models\Food  $food
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Food $food)
+    public function updateFood(Request $request, $id)
     {
-        //
+        $response = "";
+
+		$food = Food::find($id);
+
+		if($food){
+
+			$data = $request->getContent();
+
+			$data = json_decode($data);
+
+			if($data){
+
+				if(isset($data->name))
+					$food->name = $data->name;
+                if(isset($data->password))
+                    $food->nutritional_values = $data->nutritional_values;
+                    
+				try{
+
+					$food->save();
+
+					$response = "Food with name:".$food->name." updated successfully";
+				}catch(\Exception $e){
+					$response = $e->getMessage();
+				}
+			}else{
+				$response = "Incorrect Data";
+			}
+		}else{
+			$response = "Food Not Found";
+		}
+
+		return response($response);
     }
 
     /**

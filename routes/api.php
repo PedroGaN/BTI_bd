@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\FoodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('library')->group(function () {
+Route::prefix('foods')->group(function () {
+    Route::post('/new',[FoodController::class,"createUser"]);
+    Route::post('/update',[FoodController::class,"updateUser"]);
+    Route::get('/search/{name}',[FoodController::class,"searchFood"]);
+});
+
+Route::prefix('libraries')->group(function () {
     Route::post('/new',[LibraryController::class,"createLibrary"]);
     Route::post('/update',[LibraryController::class,"updateLibrary"]);
 });

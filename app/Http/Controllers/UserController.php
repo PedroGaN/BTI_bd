@@ -157,9 +157,44 @@ class UserController extends Controller
      * @param  \App\Models\Search  $search
      * @return \Illuminate\Http\Response
      */
-    public function edit(Search $search)
+    public function updateUser(Request $request, $id)
     {
-        //
+        $response = "";
+
+		$user = User::find($id);
+
+		if($user){
+
+			$data = $request->getContent();
+
+			$data = json_decode($data);
+
+			if($data){
+
+				if(isset($data->name))
+					$user->name = $data->name;
+				if(isset($data->email))
+                    $user->email = $data->email;
+                    $user->email_verified_at = NULL;
+                if(isset($data->password))
+                    $user->password = Hash::make($data->password);
+                    
+				try{
+
+					$user->save();
+
+					$response = "User with name:".$user->name." updated successfully";
+				}catch(\Exception $e){
+					$response = $e->getMessage();
+				}
+			}else{
+				$response = "Incorrect Data";
+			}
+		}else{
+			$response = "User Not Found";
+		}
+
+		return response($response);
     }
 
     /**

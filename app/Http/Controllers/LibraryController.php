@@ -22,9 +22,36 @@ class LibraryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createLibrary(Request $request)
     {
-        //
+        $response = "";
+
+        $data = $request->getContent();
+
+        $data = json_decode($data);
+
+        if($data){
+
+            $library = new Library();
+
+            $library->name = $data->name;
+            $library->region = $data->region;
+
+            try{
+
+                $user->save();
+
+                $response = "New Library: ".$library->name." created succesfully";
+
+            }catch(\Exception $e){
+                $response = $e->getMessage();
+            }
+            
+        }else{
+            $response = "Incorrect Data";
+        }
+
+        return response($response);
     }
 
     /**
@@ -55,9 +82,41 @@ class LibraryController extends Controller
      * @param  \App\Models\Library  $library
      * @return \Illuminate\Http\Response
      */
-    public function edit(Library $library)
+    public function updateLibrary(Request $request, $id)
     {
-        //
+        $response = "";
+
+		$library = Library::find($id);
+
+		if($library){
+
+			$data = $request->getContent();
+
+			$data = json_decode($data);
+
+			if($data){
+
+				if(isset($data->name))
+					$library->name = $data->name;
+				if(isset($data->region))
+                    $library->region = $data->region;
+                    
+				try{
+
+					$library->save();
+
+					$response = "Library with name:".$library->name." updated successfully";
+				}catch(\Exception $e){
+					$response = $e->getMessage();
+				}
+			}else{
+				$response = "Incorrect Data";
+			}
+		}else{
+			$response = "Library Not Found";
+		}
+
+		return response($response);
     }
 
     /**

@@ -76,11 +76,14 @@ class UserController extends Controller
                     /*try{
 
                         $user->save();*/
+                        $token = $user->createToken('btiLogged')->accessToken;
     
-                        $response = "Welcome ".$user->name;
+                        $response = "Welcome ".$user->name . "Token: " . $token;
                     /*}catch(\Exception $e){
                         $response = $e->getMessage();
                     }*/
+
+
 
                 }else{
                     
@@ -219,4 +222,24 @@ class UserController extends Controller
     {
         //
     }
+
+
+    //---------
+    //TOKENS
+    //---------
+    public function getRememberToken()
+    {
+        return $this->remember_token;
+    }
+
+    public function setRememberToken($value)
+    {
+        $this->remember_token = $value;
+    }
+
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
+    }
+
 }

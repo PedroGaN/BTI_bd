@@ -141,4 +141,14 @@ class FoodController extends Controller
     {
         //
     }
+
+
+    //TEST PARA EL TOKEN
+    public function testToken(Request $request){
+
+        $response = "Ok";
+
+        return response($response);
+
+    }
 }

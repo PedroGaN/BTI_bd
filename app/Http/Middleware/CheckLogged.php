@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Log;
 
 class CheckLogged
 {
@@ -18,19 +19,17 @@ class CheckLogged
      */
     public function handle(Request $request, Closure $next)
     {
-        //FUNCIÓN EN TESTING - DOCU LARAVEL
-        /*
-        - Comprueba el Token que va en el Header [bearerToken()], con el Token creado al hacer el Login [getRememberToken()] 
-        - La función getRememberToken(), está al final del controlador User.
-        */
 
         $apiToken = $request->bearerToken();
-        $userToken = User::getRememberToken();
 
-        if($apiToken == $userToken){
+        $user = User::where('api_token', $apiToken)->first();
+
+        if ($user){
+
             return $next($request);
+
         } else {
-            return response("Operation not allowed", 403);
+            return response("Invalid token", 401);
         }
     }
 }

@@ -77,6 +77,8 @@ class UserController extends Controller
 
                         $user->save();*/
                         $token = $user->createToken('btiLogged')->accessToken;
+                        $user->api_token = $token;
+                        $user->save();
     
                         $response = "Welcome ".$user->name . "Token: " . $token;
                     /*}catch(\Exception $e){

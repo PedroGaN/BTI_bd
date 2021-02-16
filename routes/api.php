@@ -27,7 +27,7 @@ Route::prefix('foods')->group(function () {
     Route::post('/update',[FoodController::class,"updateUser"]);
     Route::get('/search/{name}',[FoodController::class,"searchFood"]);
     //TEST TOKEN:
-    Route::post('/test',[FoodController::class,"updateUser"])->middleware('checkLogged');
+    Route::post('/test',[FoodController::class,"testToken"])->middleware('checkLogged');
 });
 
 Route::prefix('libraries')->group(function () {

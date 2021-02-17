@@ -22,7 +22,7 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($user_id, $data)
+    public function createSearch($user_id, $data)
     {
 
         if($data && $user_id){
@@ -40,6 +40,27 @@ class SearchController extends Controller
 
             }catch(\Exception $e){
                 $response = $e->getMessage();
+            }
+            
+        }else{
+            $response = "Incorrect Data";
+        }
+    }
+
+    public function getRecentSearch($user_id)
+    {
+
+        if($data && $user_id){
+
+            $searches = Search::where('user_id', $user_id)->orderBy('id','DESC')->get()->toArray();
+
+            $result = [];
+
+            for ($i = 0; $i < 10; $i++) {
+
+                $result[] = [
+                    'data' => $searches[$i]->data
+                ];
             }
             
         }else{

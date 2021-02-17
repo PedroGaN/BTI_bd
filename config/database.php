@@ -51,7 +51,7 @@ return [
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', 'root'),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'unix_socket' => env('DB_SOCKET', 'C:/xampp/mysql/mysql.sock'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

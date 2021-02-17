@@ -25,7 +25,7 @@ class CreateLibraryFoodTable extends Migration
 
             $table->foreign('library_id')->references('id')->on('libraries')->onDelete('cascade');
 
-            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
+            $table->foreign('food_id')->references('id')->on('food')->onDelete('cascade');
         
         });
 

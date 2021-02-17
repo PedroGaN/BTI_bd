@@ -22,9 +22,29 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($user_id, $data)
     {
-        //
+
+        if($data && $user_id){
+
+            $search = new Search();
+
+            $search->data = $data;
+            $search->user_id = $user_id;
+
+            try{
+
+                $search->save();
+
+                $response = "New search: ".$search->data." saved succesfully";
+
+            }catch(\Exception $e){
+                $response = $e->getMessage();
+            }
+            
+        }else{
+            $response = "Incorrect Data";
+        }
     }
 
     /**

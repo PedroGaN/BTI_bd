@@ -13,7 +13,7 @@ class CreateRecentSearchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('recent_searches', function (Blueprint $table) {
+        /*Schema::create('recent_searches', function (Blueprint $table) {
             
             $table->bigInteger('search_id')->unsigned();            
 
@@ -24,7 +24,7 @@ class CreateRecentSearchesTable extends Migration
 
             $table->foreign('search_id')->references('id')->on('searches')->onDelete('cascade');
         
-        });
+        });*/
 
     }
 

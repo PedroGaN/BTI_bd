@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SearchController;
 
 class FoodController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -53,6 +57,34 @@ class FoodController extends Controller
 
         return response($response);
     }
+
+    public function searchFood(Request $request)
+    {
+
+        $searchController = new SearchController;
+
+        $response = "";
+
+        $data = $request->getContent();
+
+        $data = json_decode($data);
+
+        if($data){
+
+            $foods = Food::where('name','like','%'.$data->search.'%')->get()->toArray();
+            $encodedFoods = json_encode($foods);
+            $response = $encodedFoods;
+
+            $searchController->createSearch();
+        }else{
+            $response = "Incorrect Data";
+        }
+
+        print($response);
+        return response($response);
+    }
+
+    
 
     /**
      * Store a newly created resource in storage.

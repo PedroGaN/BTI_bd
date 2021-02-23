@@ -96,7 +96,7 @@ class FoodController extends Controller
         $response = $encodedFoods;
 
         //print($response);
-        return response($foods);
+        return response($response);
     }
 
     

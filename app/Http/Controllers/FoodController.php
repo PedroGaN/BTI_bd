@@ -91,7 +91,7 @@ class FoodController extends Controller
 
         $response = "";
 
-        $foods = Food::all();
+        $foods = Food::all()->toArray();
         $encodedFoods = json_encode($foods);
         $response = $encodedFoods;
 

@@ -95,7 +95,7 @@ class FoodController extends Controller
         $encodedFoods = json_encode($foods);
         $response = $encodedFoods;
 
-        print($response);
+        //print($response);
         return response($response);
     }
 

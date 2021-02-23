@@ -40,7 +40,8 @@ class FoodController extends Controller
 
             $food->name = $data->name;
             $encoded_nutritional_values = json_encode($data->nutritional_values);
-            $food->nutritional_values = $encoded_nutritional_values;
+            //$food->nutritional_values = $encoded_nutritional_values;
+            $food->nutritional_values = $data->nutritional_values;
 
             try{
 

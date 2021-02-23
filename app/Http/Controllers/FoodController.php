@@ -85,6 +85,20 @@ class FoodController extends Controller
         return response($response);
     }
 
+
+    public function fetchFood()
+    {
+
+        $response = "";
+
+        $foods = Food::all();
+        $encodedFoods = json_encode($foods);
+        $response = $encodedFoods;
+
+        print($response);
+        return response($response);
+    }
+
     
 
     /**

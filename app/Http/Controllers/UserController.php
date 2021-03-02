@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function createUser(Request $request)
     {
-        $response = "";
+        $response = [];
 
         $data = $request->getContent();
 
@@ -33,9 +33,22 @@ class UserController extends Controller
 
         if($data){
 
+            $checkUser = User::where('email',$data->email)->first();
+
+            if($checkUser){
+                $response[] = [
+                    "api_key" => "",
+                    "status" => "email"
+                ];
+
+                return response($response);
+            }
+
             $user = new User();
 
-            $user->name = $data->name;
+            $users = User::all()->get()->toArray();
+
+            $user->name = "User".count($users).random_int(100, 999);
             $user->email = $data->email;
             $user->password = Hash::make($data->password);
 
@@ -43,7 +56,10 @@ class UserController extends Controller
 
                 $user->save();
 
-                $response = "New User: ".$user->name." saved succesfully";
+                $response[] = [
+                    "api_key" => $user->api_token,
+                    "status" => "OK"
+                ];
 
             }catch(\Exception $e){
                 $response = $e->getMessage();
@@ -58,7 +74,7 @@ class UserController extends Controller
 
     public function loginUser(Request $request) {
 
-        $response = "";
+        $response = [];
 
         $data = $request->getContent();
 
@@ -78,21 +94,34 @@ class UserController extends Controller
                         $user->save();*/
                         $token = $user->createToken('btiLogged')->accessToken;
                         $user->api_token = $token;
-                        $user->save();
+                        
+                        try{
+                            $user->save();
     
-                        $response = "Welcome ".$user->name . "Token: " . $token;
+                            $response[] = [
+                                "api_key" => $user->api_token,
+                                "status" => "OK"
+                            ];
+
+                        }catch(\Exception $e){
+                            $response = $e->getMessage();
+                        }
+
+ 
                     /*}catch(\Exception $e){
                         $response = $e->getMessage();
                     }*/
-
-
-
                 }else{
-                    
-                    $response = "Incorrect Password";
+                    $response[] = [
+                        "api_key" => $user->api_token,
+                        "status" => "password"
+                    ];
                 }
             }else{
-                $response = "Unknown User";
+                $response[] = [
+                    "api_key" => $user->api_token,
+                    "status" => "user"
+                ];
             }
 
         }else{

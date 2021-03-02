@@ -73,6 +73,11 @@ class FoodController extends Controller
         if($data){
 
             $foods = Food::where('name','like','%'.$data->search.'%')->get()->toArray();
+
+            /*foreach ($foods as $food) {
+                $food->nutritional_values = json_decode($food->nutritional_values);
+            }*/
+
             $encodedFoods = json_encode($foods);
             $response = $encodedFoods;
 

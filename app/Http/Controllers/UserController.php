@@ -48,6 +48,9 @@ class UserController extends Controller
 
             $users = User::all()->toArray();
 
+            $token = $user->createToken('btiLogged')->accessToken;
+            $user->api_token = $token;
+
             $user->name = "User".count($users).random_int(100, 999);
             $user->email = $data->email;
             $user->password = Hash::make($data->password);

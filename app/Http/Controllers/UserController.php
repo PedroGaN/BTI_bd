@@ -212,14 +212,14 @@ class UserController extends Controller
                     $response .= "Username";
                 }
                 if($data->new_email != "" && $data->new_email != $user->email){
-                    $user->email = $data->email;
+                    $user->email = $data->new_email;
                     $response .= "Email";
                 }
                 if($data->new_password != ""){
                     $user->password = Hash::make($data->new_password);
                     $response .= "Password";
                 }
-                
+
                 try{
 
                     $user->save();

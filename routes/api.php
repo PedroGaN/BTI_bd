@@ -25,7 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('foods')->group(function () {
     Route::post('/new',[FoodController::class,"createFood"]);
     Route::post('/update',[FoodController::class,"updateFood"]);
-    Route::post('/search',[FoodController::class,"searchFood"]);
+    Route::post('/search',[FoodController::class,"searchFood"])->middleware('checkLogged');
     Route::get('/all',[FoodController::class,"fetchFood"]);
     //TEST TOKEN:
     Route::post('/test',[FoodController::class,"testToken"])->middleware('checkLogged');
@@ -40,5 +40,8 @@ Route::prefix('users')->group(function () {
     Route::post('/new',[UserController::class,"createUser"]);
     Route::post('/update',[UserController::class,"updateUser"]);
     Route::post('/login',[UserController::class,"loginUser"]);
+    Route::post('/name',[UserController::class,"getUsername"]);
+    Route::post('/edit',[UserController::class,"updateUser"]);
+
     //Route::post('/forgotPassword',[UserController::class,"recoverPassword"]);
 });

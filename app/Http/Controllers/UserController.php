@@ -191,44 +191,72 @@ class UserController extends Controller
      * @param  \App\Models\Search  $search
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
         $response = "";
 
-		$user = User::find($id);
+        $data = $request->getContent();
 
-		if($user){
+        $data = json_decode($data);
 
-			$data = $request->getContent();
+        if($data){
 
-			$data = json_decode($data);
-
-			if($data){
-
-				if(isset($data->name))
-					$user->name = $data->name;
-				if(isset($data->email))
+            $user = User::where('api_token', $data->api_key)->first();
+            if($user->password != $data->password){
+                $response = "WrongPassword";
+                return response($response);
+            }else{
+                if($data->new_username != "")
+                    $user->name = $data->new_username;
+                    $response .= "Username";
+                if($data->new_email != "")
                     $user->email = $data->email;
-                    $user->email_verified_at = NULL;
-                if(isset($data->password))
-                    $user->password = Hash::make($data->password);
-                    
-				try{
+                    $response .= "Email";
+                if($data->new_password != "")
+                    $user->password = Hash::make($data->new_password);
+                    $response .= "Password";
 
-					$user->save();
+                try{
 
-					$response = "User with name:".$user->name." updated successfully";
-				}catch(\Exception $e){
-					$response = $e->getMessage();
-				}
-			}else{
-				$response = "Incorrect Data";
-			}
-		}else{
-			$response = "User Not Found";
-		}
+                    $user->save();
+
+                }catch(\Exception $e){
+                    $response = "EmailOnUse";
+                }
+            }
+
+
+
+        }else{
+            $response = "Incorrect Data";
+        }
+		
 
 		return response($response);
+    }
+
+    public function getUsername(Request $request){
+
+        $response = "";
+
+        $data = $request->getContent();
+
+        $data = json_decode($data);
+
+        if($data){
+
+            $user = User::where('api_token', $data->api_key)->first();
+            if($user){
+                $response = $user->name;
+            }
+
+
+
+        }else{
+            $response = "Incorrect Data";
+        }
+
+        return response($response);
     }
 
     /**

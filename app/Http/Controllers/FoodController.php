@@ -73,6 +73,7 @@ class FoodController extends Controller
         if($data){
 
             $foods = Food::where('name','like','%'.$data->search.'%')->get()->toArray();
+            $user = User::where('api_token', $data->api_key)->first();
 
             /*foreach ($foods as $food) {
                 $food->nutritional_values = json_decode($food->nutritional_values);
@@ -81,7 +82,7 @@ class FoodController extends Controller
             $encodedFoods = json_encode($foods);
             $response = $encodedFoods;
 
-            $searchController->createSearch();
+            $searchController->createSearch($user->id, $data->search);
         }else{
             $response = "Incorrect Data";
         }

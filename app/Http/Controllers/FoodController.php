@@ -82,7 +82,7 @@ class FoodController extends Controller
             }*/
 
             $encodedFoods = json_encode($foods);
-            $response = $encodedFoods;
+            $response = $foods;
 
             $searchController->createSearch($user->id, $data->search);
         }else{

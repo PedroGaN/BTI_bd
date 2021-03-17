@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserController;
 
 class FoodController extends Controller
 {

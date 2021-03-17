@@ -69,7 +69,10 @@ class UserController extends Controller
             }
             
         }else{
-            $response = "Incorrect Data";
+            $response[] = [
+                "api_key" => "",
+                "status" => "data"
+            ];
         }
 
         return response($response);
@@ -90,45 +93,39 @@ class UserController extends Controller
 
                 if(Hash::check($data->password,$user->password)){
                     
-                    //$user->api_token = self::randomToken(8,"auth");
+                    $token = $user->createToken('btiLogged')->accessToken;
+                    $user->api_token = $token;
+                    
+                    try{
+                        $user->save();
 
-                    /*try{
+                        $response[] = [
+                            "api_key" => $user->api_token,
+                            "status" => "OK"
+                        ];
 
-                        $user->save();*/
-                        $token = $user->createToken('btiLogged')->accessToken;
-                        $user->api_token = $token;
-                        
-                        try{
-                            $user->save();
-    
-                            $response[] = [
-                                "api_key" => $user->api_token,
-                                "status" => "OK"
-                            ];
-
-                        }catch(\Exception $e){
-                            $response = $e->getMessage();
-                        }
-
- 
-                    /*}catch(\Exception $e){
+                    }catch(\Exception $e){
                         $response = $e->getMessage();
-                    }*/
+                    }
+
                 }else{
                     $response[] = [
-                        "api_key" => $user->api_token,
+                        "api_key" => "",
                         "status" => "password"
                     ];
                 }
             }else{
                 $response[] = [
-                    "api_key" => $user->api_token,
+                    "api_key" => "",
                     "status" => "user"
                 ];
             }
 
         }else{
-            $response = "Incorrect Data";
+            $response[] = [
+                "api_key" => "",
+                "status" => "data"
+            ];
         }
 
         return response($response);

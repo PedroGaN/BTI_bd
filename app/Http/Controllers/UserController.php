@@ -46,7 +46,7 @@ class UserController extends Controller
 
             $user = new User();
 
-            $users = User::all()->get()->toArray();
+            $users = User::all()->toArray();
 
             $user->name = "User".count($users).random_int(100, 999);
             $user->email = $data->email;

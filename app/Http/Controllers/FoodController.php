@@ -89,7 +89,7 @@ class FoodController extends Controller
             $response = "Incorrect Data";
         }
 
-        print($response);
+        //print($response);
         return response($response);
     }
 

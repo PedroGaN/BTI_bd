@@ -202,7 +202,7 @@ class UserController extends Controller
         if($data){
 
             $user = User::where('api_token', $data->api_key)->first();
-            if($user->password != $data->password){
+            if(Hash::check($data->password,$user->password)){
                 $response = "WrongPassword";
                 return response($response);
             }else{

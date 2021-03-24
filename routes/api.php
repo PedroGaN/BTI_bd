@@ -24,6 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('foods')->group(function () {
     Route::post('/new',[FoodController::class,"createFood"]);
+    Route::post('/delete',[FoodController::class,"deleteFood"]);
     Route::post('/update',[FoodController::class,"updateFood"]);
     Route::post('/search',[FoodController::class,"searchFood"])->middleware('checkLogged');
     Route::get('/all',[FoodController::class,"fetchFood"]);

@@ -192,9 +192,38 @@ class FoodController extends Controller
      * @param  \App\Models\Food  $food
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Food $food)
+    public function deleteFood(Request $request)
     {
-        //
+
+        $response = "";
+
+        $data = $request->getContent();
+
+        $data = json_decode($data);
+
+        if($data){
+
+            $food = Food::find($data->id);
+
+			if($food){
+                    
+                try{
+
+                    $food->delete();
+
+                    $response = "OK";
+
+                }catch(\Exception $e){
+                    $response = $e->getMessage();
+                }
+			}else{
+				$response = "user";
+			}
+		}else{
+            $response = "Incorrect Data";
+
+		}
+        return response($response);
     }
 
 
